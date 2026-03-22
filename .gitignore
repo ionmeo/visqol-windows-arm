@@ -6,3 +6,4 @@
 /visqol_lib_py
 .vscode
 .bazelrc.user
+tensorflow-*/

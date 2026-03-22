@@ -142,4 +142,4 @@ jobs:
         with:
           platform: windows
           architecture: arm64
-          build-options: "--define=disable_xnnpack=true"
+          build-options: "--define=disable_xnnpack=true --define=tflite_with_xnnpack=false"
