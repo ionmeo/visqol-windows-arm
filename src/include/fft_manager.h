@@ -23,7 +23,7 @@ typedef __m128 SimdVector;
 #define SIMD_LENGTH 4
 #define SIMD_MULTIPLY(a, b) _mm_mul_ps(a, b)
 #define SIMD_LOAD_ONE_FLOAT(p) _mm_set1_ps(p)
-#elif defined(__arm__) || defined(__aarch64__) || defined(__arm64__)
+#elif defined(__arm__) || defined(__aarch64__) || defined(__arm64__) || defined(_M_ARM64)
 #include <arm_neon.h>
 typedef float32x4_t SimdVector;
 #define SIMD_LENGTH 4
