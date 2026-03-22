@@ -9,10 +9,10 @@ inputs:
   architecture:
     description: target architecture to build for
     required: true
-    build-options:
-      description: bazel build command options
-      required: false
-      default: ""
+  build-options:
+    description: bazel build command options
+    required: false
+    default: ""
 
 runs:
   using: composite

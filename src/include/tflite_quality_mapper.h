@@ -20,7 +20,9 @@
 
 #include "absl/status/status.h"
 #include "similarity_to_quality_mapper.h"
+#ifndef VISQOL_DISABLE_XNNPACK
 #include "tensorflow/lite/delegates/xnnpack/xnnpack_delegate.h"
+#endif
 #include "tensorflow/lite/interpreter.h"
 #include "tensorflow/lite/kernels/register.h"
 #include "tensorflow/lite/model_builder.h"
@@ -48,8 +50,10 @@ class TFLiteQualityMapper : public SimilarityToQualityMapper {
   const int num_frequency_bands_;
   std::unique_ptr<tflite::FlatBufferModel> model_;
   std::unique_ptr<tflite::Interpreter> interpreter_;
+#ifndef VISQOL_DISABLE_XNNPACK
   std::unique_ptr<TfLiteDelegate, std::function<void(TfLiteDelegate*)>>
       delegate_;
+#endif
 };
 
 }  // namespace Visqol

@@ -90,6 +90,14 @@ git_repository(
     tag = "v1.3.2",
 )
 
+# Import cpuinfo-6543fec before TensorFlow to override TF's bundled
+# cpuinfo-5e63739 for windows-arm64 support
+git_repository(
+    name = "cpuinfo",
+    remote = "https://github.com/pytorch/cpuinfo.git",
+    commit = "6543fec09b2f04ac4a666882998b534afc9c1349",
+)
+
 git_repository(
     name = "org_tensorflow",
     remote = "https://github.com/tensorflow/tensorflow.git",

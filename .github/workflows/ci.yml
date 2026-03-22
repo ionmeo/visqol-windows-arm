@@ -142,3 +142,4 @@ jobs:
         with:
           platform: windows
           architecture: arm64
+          build-options: "--define=disable_xnnpack=true"

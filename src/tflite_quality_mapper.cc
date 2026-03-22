@@ -17,7 +17,9 @@
 
 #include "absl/base/internal/raw_logging.h"
 #include "tensorflow/lite/c/c_api_types.h"
+#ifndef VISQOL_DISABLE_XNNPACK
 #include "tensorflow/lite/delegates/xnnpack/xnnpack_delegate.h"
+#endif
 #include "tensorflow/lite/interpreter.h"
 #include "tensorflow/lite/kernels/register.h"
 #include "tensorflow/lite/model_builder.h"
@@ -53,6 +55,7 @@ absl::Status TFLiteQualityMapper::Init() {
     return absl::ResourceExhaustedError("Could not allocate TFLite tensors.");
   }
 
+#ifndef VISQOL_DISABLE_XNNPACK
   // Use XNN if possible.
   TfLiteXNNPackDelegateOptions opts{.num_threads = 1};
   // TODO(b/219786261) Remove once XNNPACK is enabled by default.
@@ -73,6 +76,7 @@ absl::Status TFLiteQualityMapper::Init() {
   } else if (xnn_status != kTfLiteOk) {
     return absl::UnknownError("Fatal error when setting XNNPack delegate.");
   }
+#endif
 
   return absl::Status();
 }

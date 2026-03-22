@@ -8,6 +8,11 @@ licenses(["notice"])
 
 exports_files(["LICENSE"])
 
+config_setting(
+    name = "disable_xnnpack",
+    define_values = {"disable_xnnpack": "true"},
+)
+
 # Libraries
 # =========================================================
 
@@ -52,6 +57,10 @@ cc_library(
     srcs = ["src/tflite_quality_mapper.cc"],
     hdrs = ["src/include/tflite_quality_mapper.h"],
     includes = ["src/include"],
+    defines = select({
+        ":disable_xnnpack": ["VISQOL_DISABLE_XNNPACK"],
+        "//conditions:default": [],
+    }),
     deps = [
         ":file_path",
         ":similarity_to_quality_mapper",
@@ -59,9 +68,13 @@ cc_library(
         "@com_google_absl//absl/strings",
         "@org_tensorflow//tensorflow/lite:framework",
         "@org_tensorflow//tensorflow/lite/c:c_api_types",
-        "@org_tensorflow//tensorflow/lite/delegates/xnnpack:xnnpack_delegate",
         "@org_tensorflow//tensorflow/lite/kernels:builtin_ops",
-    ],
+    ] + select({
+        ":disable_xnnpack": [],
+        "//conditions:default": [
+            "@org_tensorflow//tensorflow/lite/delegates/xnnpack:xnnpack_delegate",
+        ],
+    }),
 )
 
 cc_library(
